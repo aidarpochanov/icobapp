@@ -1,0 +1,12 @@
+{% if list_of_matches %}
+    <ul>
+    {% for match in list_of_matches %}
+        <li>
+            <!---->
+        <a href="{% url 'mainapp:match_view' match.id %}">{{match.opposition}} -- {{match.date}}</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}

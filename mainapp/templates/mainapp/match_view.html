@@ -1,0 +1,7 @@
+<h1>Squad for the match against {{ match.opposition }} is as follows</h1>
+
+<ul>
+    {% for player in match.players.all %}
+        <li>  {{ player.name }}, {{ player.surname}} </li>
+    {% endfor %}
+</ul>
