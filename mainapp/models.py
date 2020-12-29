@@ -6,16 +6,11 @@ from django.contrib.auth.models import User
 class Player(models.Model):
     name = models.CharField(max_length=32)
     surname = models.CharField(max_length=32)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-
-    def votes_for_player_in_match(self):
-        match_to_votes_map = {}
-        for match in self.matches.all():
-            match_to_votes_map[str(match)] = len(self.votes_for_player.filter(match_id=match.id))
-        return match_to_votes_map
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name='player')
 
     def __str__(self):
         return "%s %s" % (self.name, self.surname)
+
 
 class Match(models.Model):
     HOME_OR_AWAY_CHOICES = [
@@ -29,6 +24,7 @@ class Match(models.Model):
 
     def __str__(self):
         return "%s-%s-%s" % (self.opposition, self.date, self.home_or_away)
+
 
 class PlayerVote(models.Model):
     player_voted_for = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='votes_for_player')

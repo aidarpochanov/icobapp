@@ -39,13 +39,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'mainapp.apps.MainappConfig',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'corsheaders'
 
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -73,6 +75,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'icobapp.wsgi.application'
 
+CORS_ORIGIN_ALLOW_ALL = True
+
+# SECURE_SSL_REDIRECT = True
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES':{
@@ -90,6 +95,10 @@ DATABASES = {
     }
 }
 
+# CORS_ORIGIN_WHITELIST = [
+#     'http://localhost:3000',
+#     'exp://192.168.1.214:19000'
+# ]
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
