@@ -24,7 +24,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = ['icob-app.herokuapp.com']
+ALLOWED_HOSTS = [
+    'icob-app.herokuapp.com',
+    'www.icob.com',
+    'icob.com'
+]
 
 
 # Application definition
