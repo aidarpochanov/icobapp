@@ -1,0 +1,1 @@
+web: gunicorn icobapp.wsgi --log-file -
