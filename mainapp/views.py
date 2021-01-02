@@ -28,7 +28,7 @@ class MatchViewSet(viewsets.ModelViewSet):
     def add_player(self, request, pk=None):
         player = Player.objects.get(user=request.user)
         match = Match.objects.get(id=int(pk))
-        if self.check_player_in_match(player, match):
+        if not self.check_player_in_match(player, match):
             match.players.add(player)
             r = response.Response(data={'response': 'You have made player %s available for this match' %str(player)})
         else:
