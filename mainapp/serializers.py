@@ -8,8 +8,9 @@ from rest_framework.authtoken.models import Token
 class PlayerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Player
-        fields = ('id', 'name', 'surname', 'user', 'votes_for_player', 'votes_by_player')
+        fields = ('id', 'name', 'surname', 'votes_for_player', 'votes_by_player')
         depth = 1
+
 
 class PlayerVoteSerializer(serializers.ModelSerializer):
     player_voted_by = PlayerSerializer(many=False)
@@ -25,6 +26,7 @@ class MatchSerializer(serializers.ModelSerializer):
         model = Match
         fields = ('id', 'date', 'opposition', 'players', 'player_votes')
         depth = 1
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

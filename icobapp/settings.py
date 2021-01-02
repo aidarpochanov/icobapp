@@ -26,7 +26,8 @@ DEBUG = config('DEBUG')
 
 ALLOWED_HOSTS = [
     'icob-app.herokuapp.com',
-    'localhost'
+    'localhost',
+    '127.0.0.1'
 ]
 
 
