@@ -1,11 +1,8 @@
-from django.shortcuts import render
 from rest_framework import viewsets, response, status, decorators
 from .models import Player, Match, PlayerVote
 from .serializers import PlayerSerializer, MatchSerializer, PlayerVoteSerializer, UserSerializer
-from django.views import generic
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from pprint import pprint as pp
 from django.contrib.auth.models import User
 # Create your views here.
 
@@ -23,6 +20,15 @@ class MatchViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication, )
     # permission_classes = (IsAuthenticated,)
     permission_classes = (AllowAny,)
+
+    @decorators.action(detail=True, methods=['POST'])
+    def vote(self, request, pk=None):
+        match = Match.objects.get(id=pk)
+        player_voted_for = Player.objects.get(id=request.data['player_voted_for'])
+        player_voted_by = Player.objects.get(user=request.user)
+        PlayerVote.objects.create(player_voted_by=player_voted_by, player_voted_for=player_voted_for, match=match)
+        r = {'message': 'Vote saved successfully', 'player_voted_for': str(player_voted_for), 'player_voted_by': str(player_voted_by)}
+        return response.Response(r, status=status.HTTP_200_OK)
 
     @decorators.action(methods=['POST'], detail=True)
     def add_player(self, request, pk=None):
@@ -74,14 +80,3 @@ class PlayerVoteViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     # permission_classes = (IsAuthenticated,)
     permission_classes = (AllowAny,)
-
-    def create(self, request):
-        request.POST._mutable = True
-        request.POST['player_voted_by'] = Player.objects.get(user=request.user)
-        request.POST['player_voted_for'] = Player.objects.get(id=request.POST['player_voted_for'])
-        request.POST._mutable = False
-        try:
-            r = super(PlayerVoteViewSet, self).create(request)
-        except Exception as e:
-            r = response.Response(data={'error_msg': str(e)})
-        return r
