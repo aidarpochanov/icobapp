@@ -17,7 +17,6 @@ class PlayerVoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = PlayerVote
         fields = ('id', 'player_voted_for', 'player_voted_by', 'match')
-        depth = 1
 
 
 class MatchSerializer(serializers.ModelSerializer):
@@ -25,7 +24,7 @@ class MatchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Match
         fields = ('id', 'date', 'opposition', 'players', 'player_votes')
-        depth = 1
+        depth = 2
 
 
 class UserSerializer(serializers.ModelSerializer):
